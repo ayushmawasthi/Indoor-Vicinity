@@ -58,7 +58,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.ViewHo
     public void onBindViewHolder(@NonNull Product_adapter.ViewHolder holder, int position) {
         holder.itemView.setTag(product.get(position));
         holder.tv1.setText(product.get(position).getProduct_name());
-        holder.tv2.setText(product.get(position).getProduct_price());
+        holder.tv2.setText(product.get(position).getProduct_brand());
         holder.tv3.setText(product.get(position).getProduct_discount()+"% off");
         holder.itempic.setImageResource(R.drawable.car1);
 

@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                     {
                         System.out.println("Right to left");
                         Toast.makeText(this, "Still under development", Toast.LENGTH_SHORT).show();
+                        Intent i =new Intent(MainActivity.this,com.tcs.indoorvicinity.UserHome.class);
+                        startActivity(i);
+
                     }
 
                 }

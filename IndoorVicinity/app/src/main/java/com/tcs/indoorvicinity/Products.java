@@ -2,12 +2,12 @@ package com.tcs.indoorvicinity;
 
 public class Products {
     private String product_name;
-    private String product_price;
+    private String product_brand;
     private String product_discount;
 
-    public Products(String product_name, String product_price, String product_discount) {
+    public Products(String product_name, String product_brand, String product_discount) {
         this.product_name = product_name;
-        this.product_price = product_price;
+        this.product_brand = product_brand;
         this.product_discount = product_discount;
     }
 
@@ -19,12 +19,12 @@ public class Products {
         this.product_name = product_name;
     }
 
-    public String getProduct_price() {
-        return product_price;
+    public String getProduct_brand() {
+        return product_brand;
     }
 
-    public void setProduct_price(String product_price) {
-        this.product_price = product_price;
+    public void setProduct_brand(String product_brand) {
+        this.product_brand = product_brand;
     }
 
     public String getProduct_discount() {

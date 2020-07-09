@@ -13,12 +13,12 @@ import android.widget.GridLayout;
 
 import java.util.ArrayList;
 
-public class Customer_Product_View extends AppCompatActivity implements PersonAdapter.ItemClicked {
+public class Customer_View_Item extends AppCompatActivity implements PersonAdapter.ItemClicked {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<Person> people;
+    ArrayList<Products> people;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,26 +32,13 @@ public class Customer_Product_View extends AppCompatActivity implements PersonAd
         recyclerView.setLayoutManager(layoutManager);
 
 
-        people = new ArrayList<Person>();
+        people = new ArrayList<Products>();
 
-        people.add(new Person("Peter England", 10, "shirt"));
-        people.add(new Person("Woodland", 15, "shirt"));
-        people.add(new Person("Monte Carlo", 20, "shirt"));
-        people.add(new Person("Raymond", 5, "tshirt"));
-        people.add(new Person("Levi's", 8, "tshirt"));
-        people.add(new Person("Lee Cooper", 7, "shirt"));
-        people.add(new Person("Peter England", 10, "shirt"));
-        people.add(new Person("Woodland", 15, "shirt"));
-        people.add(new Person("Monte Carlo", 20, "shirt"));
-        people.add(new Person("Raymond", 5, "tshirt"));
-        people.add(new Person("Levi's", 8, "tshirt"));
-        people.add(new Person("Lee Cooper", 7, "shirt"));
-        people.add(new Person("Peter England", 10, "shirt"));
-        people.add(new Person("Woodland", 15, "shirt"));
-        people.add(new Person("Monte Carlo", 20, "shirt"));
-        people.add(new Person("Raymond", 5, "tshirt"));
-        people.add(new Person("Levi's", 8, "tshirt"));
-        people.add(new Person("Lee Cooper", 7, "shirt"));
+        people.add(new Products("Jeans", "Peter England", "10"));
+        people.add(new Products("Shoes", "Woodland", "20"));
+        people.add(new Products("Shirt", "Monte Carlo", "10"));
+        people.add(new Products("TShirt", "Raymond", "15"));
+
 
 
         myAdapter = new PersonAdapter(this, people);

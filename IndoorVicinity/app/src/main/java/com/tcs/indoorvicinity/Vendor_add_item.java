@@ -23,7 +23,7 @@ public class Vendor_add_item extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_add_item);
         recyclerView=findViewById(R.id.recyclerview1);
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
         layoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         product=new ArrayList<Products>();
