@@ -23,6 +23,10 @@
         android:background="#B0F899"
         android:layout_weight="1">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
@@ -38,6 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#F3AEAE"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
 
 </LinearLayout>

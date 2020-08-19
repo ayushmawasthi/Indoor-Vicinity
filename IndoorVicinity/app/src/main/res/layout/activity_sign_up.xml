@@ -97,6 +97,16 @@
                 android:textColorHint="#66B15B"
                 android:padding="10dp"
                 android:textColor="#D510EF" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/shop_id"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:hint="Shop ID"
+                android:textColorHint="#66B15B"
+                android:padding="10dp"
+                android:textColor="#D510EF" />
 
             <Button
                 android:id="@+id/btn_sign_up"

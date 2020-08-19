@@ -1,28 +1,29 @@
 package com.tcs.indoorvicinity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.tcs.indoorvicinity.Model.Users;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
     Button b1;
     EditText phnum,pass;
-    String value;
-    private String ParantDbName="Users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,58 +45,65 @@ public class Login extends AppCompatActivity {
     }
 
     private void LoginUser() {
-        String phone=phnum.getText().toString().trim();
-        String passw=pass.getText().toString().trim();
+        final String phone=phnum.getText().toString().trim();
+        final String passw=pass.getText().toString().trim();
         if(TextUtils.isEmpty(phone)  && TextUtils.isEmpty(passw))
         {
             Toast.makeText(this, "Please fill out fields carefully", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            allowaccess(phone,passw);
+            StringRequest request=new StringRequest(Request.Method.POST, "http://inroute.onlinewebshop.net/login.php", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
+                    System.out.println(response);
+                    if(response.equals("2") || response.equals("02"))
+                    {
+                        Toast.makeText(Login.this, "Phone Number Do not exists in Database", Toast.LENGTH_SHORT).show();
+                        Intent i=new Intent(Login.this,com.tcs.indoorvicinity.SignUp.class);
+                        i.putExtra("email",phone);
+                        startActivity(i);
+                    }
+                    else if(response.contains("1"))
+                    {
+                        Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
+                        Intent i=new Intent(Login.this,com.tcs.indoorvicinity.Vendor_add_item.class);
+                        startActivity(i);
+
+                    }
+                    else
+                    {
+                        Toast.makeText(Login.this, "Please enter valid credentials", Toast.LENGTH_SHORT).show();
+                    }
+                    System.out.println(response);
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Log.d("Login", "Error: " + error
+                            + "\nStatus Code " + error.networkResponse.statusCode
+                            + "\nResponse Data " + error.networkResponse.data
+                            + "\nCause " + error.getCause()
+                            + "\nmessage" + error.getMessage());
+
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String,String>params=new HashMap<>();
+                    params.put("username",phone);
+                    params.put("password",passw);
+                    return params;
+                }
+            };
+            Volley.newRequestQueue(this).add(request);
 
 
         }
     }
 
-    private void allowaccess(final String phone, final String passw) {
-        final DatabaseReference Rootref;
-        Rootref= FirebaseDatabase.getInstance().getReference();
-        Rootref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(ParantDbName).child(phone).exists())
-                {
-                    Users usersdata=snapshot.child(ParantDbName).child(phone).getValue(Users.class);
-                    if(usersdata.getPhone().equals(phone))
-                    {
-                        if(usersdata.getPassword().equals(passw))
-                        {
-                             Intent i=new Intent(Login.this,com.tcs.indoorvicinity.Vendor_add_item.class);
-                             startActivity(i);
-                        }
-                        else
-                        {
-                            Toast.makeText(Login.this, "Wrong Passwqord", Toast.LENGTH_SHORT).show();
-                        }
-                    }
 
-
-                }
-                else
-                {
-                    Toast.makeText(Login.this, "Account Do not exists", Toast.LENGTH_SHORT).show();
-                    value=phnum.getText().toString().trim();
-                    Intent i=new Intent(Login.this,com.tcs.indoorvicinity.SignUp.class);
-                    i.putExtra("email",value);
-                    startActivity(i);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }
