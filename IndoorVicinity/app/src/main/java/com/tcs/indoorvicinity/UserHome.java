@@ -26,7 +26,7 @@ public class UserHome extends AppCompatActivity {
     ArrayList<Products> product;
     ImageView productview,searchbutton;
     AutoCompleteTextView etsearch;
-    String []names={"Raymond","Shirts","TShirts","Glasses","Woodland","Reebok","Adidas","Peter England","Intex"};
+    String []names={"Raymond","Shirts","TShirts","Glasses","Woodland","Reebok","Adidas","Peter England","Intex", "Jeans"};
     TextView t1temp;
 
 

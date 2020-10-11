@@ -17,20 +17,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Vendor_add_product_form extends AppCompatActivity {
     ImageView product_img;
@@ -40,21 +35,20 @@ public class Vendor_add_product_form extends AppCompatActivity {
     Button addnew;
     String p_name,p_category,p_brand,p_discount,save_cuurent_date,getSave_cuurent_time;
     String productRamdomkey,downloadImageUrl;
-    private StorageReference ProductImageRef;
-    DatabaseReference ProductRef;
+    String shopid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_add_product_form);
-        ProductImageRef= FirebaseStorage.getInstance().getReference().child("Product Images");
-        ProductRef= FirebaseDatabase.getInstance().getReference().child("Products");
         product_img=findViewById(R.id.add_product_image);
         e1=findViewById(R.id.form_name_of_product);
         e2=findViewById(R.id.form_categ_of_product);
         e3=findViewById(R.id.form_brand_of_product);
         e4=findViewById(R.id.form_discount_of_product);
         addnew=findViewById(R.id.btn_add_product);
+        Intent intent=getIntent();
+        shopid=intent.getStringExtra("shopid");
         product_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,80 +116,40 @@ public class Vendor_add_product_form extends AppCompatActivity {
     }
     private void storeproductinfo()
     {
-        Calendar calendar=Calendar.getInstance();
-        SimpleDateFormat currentdate=new SimpleDateFormat("MM dd yyyy");
-        save_cuurent_date=currentdate.format(calendar.getTime());
-        SimpleDateFormat currenttime=new SimpleDateFormat("HH:mm:ss a");
-        save_cuurent_date=currenttime.format(calendar.getTime());
-        productRamdomkey=save_cuurent_date+getSave_cuurent_time;
-        final StorageReference filepath=ProductImageRef.child(imageuri.getLastPathSegment()+productRamdomkey+".jpg");
-        final UploadTask uploadTask=filepath.putFile(imageuri);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, "http://inroute.onlinewebshop.net/add_prod.php", new Response.Listener<String>() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                String temp1=e.toString();
-                Toast.makeText(Vendor_add_product_form.this, "Error: "+temp1, Toast.LENGTH_SHORT).show();
+            public void onResponse(String response) {
+                //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                System.out.println(response);
+                Toast.makeText(Vendor_add_product_form.this, response, Toast.LENGTH_SHORT).show();
 
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        }, new Response.ErrorListener() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(Vendor_add_product_form.this, "Image Added Successfully", Toast.LENGTH_SHORT).show();
-                Task<Uri> urlTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if(!task.isSuccessful())
-                        {
-                            throw task.getException();
-                        }
-                        downloadImageUrl=filepath.getDownloadUrl().toString();
-                        return filepath.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if(task.isSuccessful())
-                        {
-                            downloadImageUrl=task.getResult().toString();
-                            Toast.makeText(Vendor_add_product_form.this, "Getting Product Image URl", Toast.LENGTH_SHORT).show();
-                            saveproductinfo();
-                        }
-
-                    }
-                });
+            public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            @Override
+            protected Map<String, String> getParams()  {
+                Map<String,String>parms=new HashMap<String, String>();
+                parms.put("product_name",p_name);
+                parms.put("product_image","abc.jpeg");
+                parms.put("product_price",p_category);
+                parms.put("product_brand",p_brand);
+                parms.put("product_discount",p_discount);
+                parms.put("shopid",shopid);
 
 
-
-
+                return parms;
+            }
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
-    private void saveproductinfo()
-    {
-        HashMap<String,Object>productMap=new HashMap<>();
-        productMap.put("pid",productRamdomkey);
-        productMap.put("date",save_cuurent_date);
-        productMap.put("time",getSave_cuurent_time);
-        productMap.put("Product_Name",p_name);
-        productMap.put("Product_Image",product_img);
-        productMap.put("Product_Category",p_category);
-        productMap.put("Product_Brand",p_brand);
-        productMap.put("Product_Discount",p_discount);
-        ProductRef.child(productRamdomkey).updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful())
-                {
-                    Toast.makeText(Vendor_add_product_form.this, "Product Added successfully", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    String temp1=task.getException().toString();
-                    Toast.makeText(Vendor_add_product_form.this, "Error: "+temp1, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
-    }
+
 }
+
+

@@ -53,7 +53,7 @@
             android:id="@+id/form_categ_of_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Product Category"
+            android:hint="Product Price"
             android:textColorHint="#66B15B"
             android:textColor="#D510EF"
             android:layout_margin="10dp"/>

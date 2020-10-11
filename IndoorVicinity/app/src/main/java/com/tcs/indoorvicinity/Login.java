@@ -58,6 +58,24 @@ public class Login extends AppCompatActivity {
                 public void onResponse(String response) {
                     Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
                     System.out.println(response);
+                    String shopid="";
+                    int tmp=0;
+                    for(int i =0;i<response.length();i++)
+                    {
+                        if(response.charAt(i)==',' && tmp==0)
+                        {
+                            tmp=1;
+                        }
+                        else if(tmp==1 && response.charAt(i)==','){
+                            break;                  // when second , is encountered
+
+                        }
+                        else if(tmp==1) {
+                            shopid=shopid+response.charAt(i);
+                            }
+                    }
+                    System.out.println("shopid");
+                    System.out.println("1233333"+shopid);
                     if(response.equals("2") || response.equals("02"))
                     {
                         Toast.makeText(Login.this, "Phone Number Do not exists in Database", Toast.LENGTH_SHORT).show();
@@ -69,6 +87,7 @@ public class Login extends AppCompatActivity {
                     {
                         Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
                         Intent i=new Intent(Login.this,com.tcs.indoorvicinity.Vendor_add_item.class);
+                        i.putExtra("shopid", shopid);
                         startActivity(i);
 
                     }
