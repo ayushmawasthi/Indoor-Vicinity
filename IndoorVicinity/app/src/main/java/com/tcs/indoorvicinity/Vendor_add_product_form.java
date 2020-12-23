@@ -121,7 +121,7 @@ public class Vendor_add_product_form extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-                System.out.println(response);
+              //  System.out.println(response);
                 Toast.makeText(Vendor_add_product_form.this, response, Toast.LENGTH_SHORT).show();
 
             }

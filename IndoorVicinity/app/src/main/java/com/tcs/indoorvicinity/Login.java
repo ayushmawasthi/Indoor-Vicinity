@@ -57,7 +57,7 @@ public class Login extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
-                    System.out.println(response);
+                    //System.out.println(response);
                     String shopid="";
                     int tmp=0;
                     for(int i =0;i<response.length();i++)
@@ -74,8 +74,8 @@ public class Login extends AppCompatActivity {
                             shopid=shopid+response.charAt(i);
                             }
                     }
-                    System.out.println("shopid");
-                    System.out.println("1233333"+shopid);
+                    //System.out.println("shopid");
+                    //System.out.println("1233333"+shopid);
                     if(response.equals("2") || response.equals("02"))
                     {
                         Toast.makeText(Login.this, "Phone Number Do not exists in Database", Toast.LENGTH_SHORT).show();
@@ -95,7 +95,7 @@ public class Login extends AppCompatActivity {
                     {
                         Toast.makeText(Login.this, "Please enter valid credentials", Toast.LENGTH_SHORT).show();
                     }
-                    System.out.println(response);
+                    //System.out.println(response);
 
                 }
             }, new Response.ErrorListener() {
@@ -123,6 +123,5 @@ public class Login extends AppCompatActivity {
 
         }
     }
-
 
 }

@@ -76,8 +76,8 @@ public class Vendor_add_item extends AppCompatActivity {
         StringRequest request=new StringRequest(Request.Method.POST, "http://inroute.onlinewebshop.net/vendor_fetch_prod.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(Vendor_add_item.this, response, Toast.LENGTH_SHORT).show();
-                System.out.println("12322123344"+response);
+                //Toast.makeText(Vendor_add_item.this, response, Toast.LENGTH_SHORT).show();
+               // System.out.println("12322123344"+response);
 
                 int i,j,n=response.length();
                 if(response.length()<=4)
@@ -88,7 +88,7 @@ public class Vendor_add_item extends AppCompatActivity {
                 else{
                     responsefromphp=response.substring(0,response.length()-1);
                     String pn,pd,pp;
-                String sar[]=responsefromphp.split("-");
+                    String sar[]=responsefromphp.split("-");
 
                 for(i=0;i<sar.length;i++)
                 {
@@ -97,9 +97,10 @@ public class Vendor_add_item extends AppCompatActivity {
                     pp=sarr[2];
                     pd=sarr[4];
                     product.add(new Products(pn,pp,pd));
-                    System.out.println(pn+" "+pp+" "+pd);
+                    //System.out.println(pn+" "+pp+" "+pd);
                     myAdapter.notifyDataSetChanged();
-                }}
+                }
+                }
 
 
 

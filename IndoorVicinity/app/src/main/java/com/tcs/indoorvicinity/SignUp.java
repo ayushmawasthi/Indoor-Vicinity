@@ -74,8 +74,8 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-                System.out.println(response);
-                Toast.makeText(SignUp.this, response, Toast.LENGTH_SHORT).show();
+               // System.out.println(response);
+                //Toast.makeText(SignUp.this, response, Toast.LENGTH_SHORT).show();
                 if(response.contains("1"))
                 {
                     Intent i =new Intent(SignUp.this,com.tcs.indoorvicinity.Login.class);

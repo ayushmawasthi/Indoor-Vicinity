@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     // Left to Right swipe action
                     if (x2 > x1)
                     {
-                        System.out.println("Left to right");
+                      //  System.out.println("Left to right");
                         Intent i =new Intent(MainActivity.this,com.tcs.indoorvicinity.Login.class);
                         startActivity(i);
                     }
@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     // Right to left swipe action
                     else
                     {
-                        System.out.println("Right to left");
-                        Toast.makeText(this, "Still under development", Toast.LENGTH_SHORT).show();
+                        //System.out.println("Right to left");
                         Intent i =new Intent(MainActivity.this,com.tcs.indoorvicinity.UserHome.class);
                         startActivity(i);
 

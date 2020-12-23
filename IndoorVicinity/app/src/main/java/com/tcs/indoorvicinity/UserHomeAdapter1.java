@@ -1,6 +1,7 @@
 package com.tcs.indoorvicinity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 class UserHomeAdapter1 extends RecyclerView.Adapter<UserHomeAdapter1.ViewHolder>  {
-    private ArrayList<Products> product;
-    public UserHomeAdapter1(Context context, ArrayList<Products> list) {
+    private ArrayList<String> product;
+    ItemClicked activity;
+
+    public interface ItemClicked
+    {
+        public void onItemClicked(int index,String s1);
+    }
+    public UserHomeAdapter1(Context context, ArrayList<String> list) {
         product=list;
+        activity = (ItemClicked) context;
 
     }
 
@@ -33,8 +41,11 @@ class UserHomeAdapter1 extends RecyclerView.Adapter<UserHomeAdapter1.ViewHolder>
                 @Override
                 public void onClick(View v) {
 
-                    System.out.println("Item clicked " +getItemCount() );
-                    System.out.println("2 "+getAbsoluteAdapterPosition());
+               //     System.out.println("Item clicked " +getItemCount() );
+                //    System.out.println("2 "+getAbsoluteAdapterPosition());
+                    activity.onItemClicked(product.indexOf((String)v.getTag()),"product");
+
+
 
 
                 }
@@ -54,7 +65,7 @@ class UserHomeAdapter1 extends RecyclerView.Adapter<UserHomeAdapter1.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull UserHomeAdapter1.ViewHolder holder, int position) {
         holder.itemView.setTag(product.get(position));
-        holder.tv1.setText(product.get(position).getProduct_name());
+        holder.tv1.setText(product.get(position));
         holder.itempic.setImageResource(R.drawable.car1);
 
 

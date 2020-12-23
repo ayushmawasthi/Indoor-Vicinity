@@ -14,12 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 class UserHomeAdapter2 extends RecyclerView.Adapter<UserHomeAdapter2.ViewHolder> {
-    private ArrayList<Products> product;
+    private ArrayList<String> product;
+    ItemClicked activity;
+    public interface ItemClicked
+    {
+        public void onItemClicked(int index,String s1);
+    }
 
 
 
-    public UserHomeAdapter2(Context context, ArrayList<Products> list) {
+    public UserHomeAdapter2(Context context, ArrayList<String> list) {
         product=list;
+        activity = (ItemClicked) context;
 
     }
 
@@ -37,8 +43,9 @@ class UserHomeAdapter2 extends RecyclerView.Adapter<UserHomeAdapter2.ViewHolder>
                 @Override
                 public void onClick(View v) {
 
-                    System.out.println("Item clicked " +getItemCount() );
-                    System.out.println("2 "+getAbsoluteAdapterPosition());
+             //       System.out.println("Item clicked " +getItemCount() );
+                 //   System.out.println("2 "+getAbsoluteAdapterPosition());
+                    activity.onItemClicked(product.indexOf((String) v.getTag()),"shop");
 
 
                 }
@@ -58,7 +65,7 @@ class UserHomeAdapter2 extends RecyclerView.Adapter<UserHomeAdapter2.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull UserHomeAdapter2.ViewHolder holder, int position) {
         holder.itemView.setTag(product.get(position));
-        holder.tv1.setText(product.get(position).getProduct_brand());
+        holder.tv1.setText(product.get(position));
         holder.itempic.setImageResource(R.drawable.car1);
 
 
