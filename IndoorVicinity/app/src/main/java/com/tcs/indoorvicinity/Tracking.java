@@ -43,6 +43,12 @@ public class Tracking extends AppCompatActivity implements SensorEventListener {
     long lastUpdatedTime=0;
     float currentDegree=0f;
 
+    TextView t3,t4;
+
+    int Glob_Counter=0;
+    int cuurentdegree1=0;
+    int curstep=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,8 @@ public class Tracking extends AppCompatActivity implements SensorEventListener {
         Intent i=new Intent();
         start=i.getStringExtra("start");
         shop=i.getStringExtra("shop");
+        start="s1";
+        shop="e1";
         hs=new HashMap<>();
         hs.put(start+shop,"130_13 50_25");
 
@@ -61,6 +69,9 @@ public class Tracking extends AppCompatActivity implements SensorEventListener {
         img=findViewById(R.id.imgv);
         accelerometer=sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer=sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+        t3=findViewById(R.id.move);
+        t4=findViewById(R.id.howleft);
 
         if(accelerometer !=null)
         {
@@ -101,17 +112,22 @@ public class Tracking extends AppCompatActivity implements SensorEventListener {
         }
 
 
+
+
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         Sensor sensor=event.sensor;
+
         if(sensor.getType()==Sensor.TYPE_STEP_DETECTOR)
         {
             accx=""+event.values[0];
 
             stepDetect= (int) (stepDetect+event.values[0]);
+            curstep=stepDetect;
             t1.setText(String.valueOf(stepDetect));
+
         }
         if(event.sensor==accelerometer)
         {
@@ -140,8 +156,46 @@ public class Tracking extends AppCompatActivity implements SensorEventListener {
             currentDegree=-azimuthInDegree;
             lastUpdatedTime=System.currentTimeMillis();
             t2.setText(azimuthInDegree+"deg");
+            cuurentdegree1=(int)azimuthInDegree;
+
 
         }
+        String path [] =hs.get(start+shop).split(" ");
+        if(Glob_Counter<path.length) {
+            String i = path[Glob_Counter];
+            System.out.println("Direction is" + i);
+            String m[] = i.split("_");
+            int direction = Integer.parseInt(m[0]);
+            int stepstowalk = Integer.parseInt(m[1]);
+            int diff = cuurentdegree1 - direction;
+            if (diff < 20 && diff > -20) {
+                t3.setText("Move Straight");
+
+            } else if (diff > 20) {
+                t3.setText("Move Left");
+            } else if (diff < -20) {
+                t3.setText("Move Right");
+            }
+            t4.setText(stepstowalk+" --> "+direction+" --->  "+diff+" --> "+cuurentdegree1);
+
+            if (curstep > stepstowalk - 3) {
+                Glob_Counter++;
+
+            }
+        }
+        else
+        {
+            t3.setText("You have successfully reached");
+        }
+
+
+
+
+
+
+
+
+
 
 
     }

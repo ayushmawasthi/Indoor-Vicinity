@@ -21,13 +21,30 @@ public class ScanQR extends AppCompatActivity {
     CodeScannerView codeScannerView;
 
 
+    Button b1,b2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_q_r);
-        codeScannerView=findViewById(R.id.scanner);
-        codeScanner=new CodeScanner(this,codeScannerView);
+        b1=findViewById(R.id.btnqr1);
+        b2=findViewById(R.id.btnqr2);
+      //  codeScannerView=findViewById(R.id.scanner);
+      //  codeScanner=new CodeScanner(this,codeScannerView);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                opennew("qr1");
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                opennew("qr1");
+            }
+        });
 
        /* codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
@@ -42,28 +59,23 @@ public class ScanQR extends AppCompatActivity {
             }
         });
 
-        */
+
         codeScannerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 codeScanner.startPreview();
             }
         });
-
-
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        opennew();
-        return super.onTouchEvent(event);
+*/
 
     }
 
-    private void opennew() {
+
+
+    private void opennew(String qr) {
         Intent i=new Intent(ScanQR.this,com.tcs.indoorvicinity.Tracking.class);
         i.putExtra("shop","inroute1");
-        i.putExtra("start","qr1");
+        i.putExtra("start",qr);
         startActivity(i);
     }
     //    @Override

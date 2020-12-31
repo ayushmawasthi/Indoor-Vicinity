@@ -10,8 +10,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Steps Walked Total"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/tvsteps"
-        android:text="Steps"/>
+        android:text="Steps"
+        android:layout_marginBottom="20dp"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,8 +25,29 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Current Direction in Degrees"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/direc"
         android:text="Direction"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Which direction to move"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/move"
+        android:text="Where to move"
+        android:layout_marginBottom="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/howleft"
+        android:text="How much left"/>
 
 
 
