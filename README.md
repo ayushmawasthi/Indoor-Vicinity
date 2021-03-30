@@ -49,20 +49,7 @@ Then customer need not to sign in, he can just check what are the prodcuts insid
 ## What's Next
 <p>We will be adding Augmented Reality to this application and this will be an optional feature. If the device is supported with ARCORE, then it will allow to use that feature otherwise it will implement the tracking showing the text only</p>
 
-# Schreenshots
-  
-  ***Below are some screenshots of the application**
-Landing Page | Login Page
---- | ---
-![](screenshots/landing.jpeg) | ![](screenshots/login.jpeg)
 
-Vendor Home Page | Vendor Add Product
---- | ---
-![](screenshots/vendorlanding.jpeg) | ![](screenshots/updatevendor.jpeg)
-
-Vendor Home Page | Vendor Add Product
---- | ---
-![](screenshots/allcusto.jpeg) | ![](screenshots/prodcutcus.jpeg)
 
   
 
